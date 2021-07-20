@@ -1,10 +1,10 @@
-package com.example.myapplication;
+package com.example.myapplication.units;
 
 public class Product {
-    private int product_id;
-    private String name;
-    private String description;
-    private String image_url;
+    private final int product_id;
+    private final String name;
+    private final String description;
+    private final String image_url;
 
     public Product(int product_id, String name, String description, String image_url) {
         this.product_id = product_id;

@@ -1,16 +1,17 @@
-package com.example.myapplication;
+package com.example.myapplication.units;
 
 public class Favourite {
-        private String shop;
-        private String product;
-        private int price;
-        private String specialOffers;
-        private String image_url;
-        private double latitude,longitude;
+        private final String shop;
+        private final String product;
+        private final int price;
+        private final String specialOffers;
+        private final String image_url;
+        private final double latitude;
+    private final double longitude;
 
 
 
-    private int product_shop_id;
+    private final int product_shop_id;
 
     public Favourite(int product_shop_id,String shop, String product, int price, String specialOffers, String image_url,double latitude,double longitude) {
         this.product_shop_id=product_shop_id;

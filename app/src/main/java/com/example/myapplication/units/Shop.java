@@ -1,15 +1,14 @@
-package com.example.myapplication;
+package com.example.myapplication.units;
 
-import android.location.Location;
 import java.util.Comparator;
 
 public class Shop {
-    private int id;
-    private String name;
-    private int price;
-    private String specialOffers;
-    private double latitude;
-    private double longitude;
+    private final int id;
+    private final String name;
+    private final int price;
+    private final String specialOffers;
+    private final double latitude;
+    private final double longitude;
     private double distance;
 
     public Shop(int id, String name, int price, String specialOffers, double latitude, double longitude) {
@@ -20,20 +19,12 @@ public class Shop {
         this.latitude = latitude;
         this.longitude = longitude;
     }
-    public static Comparator<Shop> shopPriceComparator=new Comparator<Shop>() {
-        @Override
-        public int compare(Shop s1, Shop s2) {
-            return s1.getPrice() - s2.getPrice();
-        }
-    };
-    public static Comparator<Shop> shopDistanceComparator=new Comparator<Shop>() {
-        @Override
-        public int compare(Shop s1, Shop s2) {
-            int s1Int=(int)s1.getDistance();
-            int s2Int=(int)s2.getDistance();
+    public static Comparator<Shop> shopPriceComparator= (s1, s2) -> s1.getPrice() - s2.getPrice();
+    public static Comparator<Shop> shopDistanceComparator= (s1, s2) -> {
+        int s1Int=(int)s1.getDistance();
+        int s2Int=(int)s2.getDistance();
 
-            return s1Int - s2Int;
-        }
+        return s1Int - s2Int;
     };
 
 

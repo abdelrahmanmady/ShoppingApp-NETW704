@@ -1,10 +1,10 @@
-package com.example.myapplication;
+package com.example.myapplication.adapters;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,32 +13,32 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.myapplication.R;
+import com.example.myapplication.units.Shop;
+
 import java.util.List;
 
 public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder>{
-    private Context mCtx;
-    private List<Shop> shopList;
-    private String email;
-    private int product_id;
-    private double curLat,curLong;
-    private static final String INSERTION_URL="http://192.168.1.102/LoginRegister/favinsert.php";
+    private final Context mCtx;
+    private final List<Shop> shopList;
+    private final String email;
+    private final int product_id;
+    private static final String INSERTION_URL="http://192.168.1.2/LoginRegister/favinsert.php";
 
 
-    public ShopAdapter(Context mCtx, List<Shop> shopList,String email,int product_id,double curLat,double curLong){
+    public ShopAdapter(Context mCtx, List<Shop> shopList, String email, int product_id){
         this.mCtx = mCtx;
         this.shopList = shopList;
         this.email=email;
         this.product_id=product_id;
-        this.curLat=curLat;
-        this.curLong=curLong;
 
     }
 
@@ -46,7 +46,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
     @Override
     public ShopViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.details_layout,null);
+        @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.details_layout,null);
         return new ShopViewHolder(view);
     }
 
@@ -62,33 +62,15 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
         }
         holder.price_distance.setText(string);
         holder.specialOffers.setText(shop.getSpecialOffers());
-        holder.getDirection.setOnClickListener(new View.OnClickListener() {
-                @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?daddr="+shop.getLatitude()+","+shop.getLongitude()));
-                mCtx.startActivity(intent);
+        holder.getDirection.setOnClickListener(v -> {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?daddr="+shop.getLatitude()+","+shop.getLongitude()));
+        mCtx.startActivity(intent);
 
 
-            }
-        });
-        holder.addToFav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    StringRequest stringRequest = new StringRequest(Request.Method.GET, INSERTION_URL + "?param1='" + email + "'&param2=" + shop.getId() + "&param3=" + product_id, new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            Toast.makeText(mCtx, response, Toast.LENGTH_SHORT).show();
-
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(mCtx, error.getMessage(), Toast.LENGTH_SHORT).show();
-
-                        }
-                    });
-                    Volley.newRequestQueue(mCtx).add(stringRequest);
-            }
+    });
+        holder.addToFav.setOnClickListener(v -> {
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, INSERTION_URL + "?param1='" + email + "'&param2=" + shop.getId() + "&param3=" + product_id, response -> Toast.makeText(mCtx, response, Toast.LENGTH_SHORT).show(), error -> Toast.makeText(mCtx, error.getMessage(), Toast.LENGTH_SHORT).show());
+                Volley.newRequestQueue(mCtx).add(stringRequest);
         });
 
     }
@@ -98,7 +80,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
         return shopList.size();
     }
 
-    class ShopViewHolder extends RecyclerView.ViewHolder{
+    static class ShopViewHolder extends RecyclerView.ViewHolder{
         TextView shopName, price_distance, specialOffers;
         ImageButton addToFav;
         Button getDirection;

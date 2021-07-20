@@ -13,9 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Favourites" />
-        <activity android:name=".DetailsList" />
-        <activity android:name=".ListActivity" />
+        <activity android:name=".activities.Favourites" />
+        <activity android:name=".activities.DetailsList" />
+        <activity android:name=".activities.ListActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -24,15 +24,15 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".LoginActivity">
+        <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".activities.RegisterActivity" />
+        <activity android:name=".activities.MainActivity" />
     </application>
 
 </manifest>
