@@ -1,5 +1,6 @@
 # ShoppingApp-NETW704
-This is a university project of a an application to present various products to the users and sellers offering the product developed using android studio in java.
+This is a university project of a an application to present various products to the users and sellers offering the product.
+Developed using android studio-java.
 
 features:
 1. fast and responsive UI.
